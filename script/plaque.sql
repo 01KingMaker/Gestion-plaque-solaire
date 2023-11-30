@@ -3,6 +3,14 @@ drop database plaque_solaire;
 CREATE DATABASE PLAQUE_SOLAIRE;
 \c plaque_solaire
 
+create sequence seq_plaque;
+create sequence seq_batterie;
+create sequence seq_source;
+create sequence seq_secteur;
+create sequence seq_status;
+create sequence seq_lumiere;
+create sequence seq_pointage;
+
 CREATE TABLE Plaque_solaire(
    id_plaque_solaire VARCHAR(50) ,
    puissance_max INTEGER,
@@ -15,12 +23,14 @@ CREATE TABLE batterie(
    PRIMARY KEY(id_batterie)
 );
 
+
 CREATE TABLE secteur(
    id_secteur VARCHAR(50) ,
    nom_secteur VARCHAR(50) ,
    capacite_max INTEGER,
    PRIMARY KEY(id_secteur)
 ); 
+
 
 CREATE TABLE status(
    id_status VARCHAR(50) ,
@@ -41,6 +51,7 @@ CREATE TABLE Lumiere(
    FOREIGN KEY(id_status) REFERENCES status(id_status)
 );
 
+
 CREATE TABLE pointage_eleve(
    id_pointage INTEGER,
    date_pointage DATE NOT NULL,
@@ -52,6 +63,7 @@ CREATE TABLE pointage_eleve(
    FOREIGN KEY(id_secteur) REFERENCES secteur(id_secteur)
 );
 
+
 CREATE TABLE source(
    id_plaque_solaire VARCHAR(50) ,
    puissance_plaque_totale NUMERIC(15,10)  ,
@@ -62,3 +74,13 @@ CREATE TABLE source(
    FOREIGN KEY(id_plaque_solaire) REFERENCES Plaque_solaire(id_plaque_solaire),
    FOREIGN KEY(id_batterie) REFERENCES batterie(id_batterie)
 );
+
+alter table source drop column id_plaque_solaire;
+alter table source add column  id_source varchar(10) primary key ;
+
+create table association_secteur_source(
+    id_secteur varchar(10) references secteur(id_secteur),
+    id_source varchar(10) references source(id_source)
+);
+
+alter table association_secteur_source add column date_association date;
