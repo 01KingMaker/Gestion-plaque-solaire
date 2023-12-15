@@ -1,6 +1,7 @@
 package com.plaquesolaire.entity.objet;
 
 import annotation.*;
+import com.plaquesolaire.entity.information.Reception;
 import dao.BddObject;
 
 import java.sql.Connection;
@@ -14,16 +15,29 @@ public class PlaqueSolaire extends BddObject
 
     @PrimaryKey(prefix = "PS", sequence = "seq_plaque", length = 10)
     @Column(name = "id_plaque_solaire")
-    public String idPlaqueSolaire;    
+    private String idPlaqueSolaire;
 
     @Column(name = "puissance_max")
-    public Integer puissanceMax;
+    private Integer puissanceMax;
 
     @Column(name = "id_source")
-    public String idSource;
+    private String idSource;
+
+    Reception reception;
+
+    public void setReception(Reception reception) {
+        this.reception = reception;
+    }
+
+    public Reception getReception() {
+        return reception;
+    }
 
     public double getCurrentPower(Integer heure, double puissance){
         return (heure * puissance) / 10;
+    }
+    public double getSolarPower(){
+        return  (this.reception.getLuminosite() * this.puissanceMax) / 10;
     }
     public List<Object> getPlaqueByIdSource(String idSource, Connection c) throws Exception {
         PlaqueSolaire plaqueSolaire = new PlaqueSolaire();

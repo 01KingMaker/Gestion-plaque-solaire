@@ -12,8 +12,8 @@ public class PointageEleve extends BddObject
 {
 
     @ForeignKey
-    @Column(name = "id_secteur")
-    public String idSecteur;    
+    @Column(name = "id_battiment")
+    public String idBattiment;
 
     @Column(name = "date_pointage")
     public java.sql.Date datePointage;    
@@ -31,18 +31,19 @@ public class PointageEleve extends BddObject
     @Column(name = "nombre")
     public Integer nombre;    
 
-    public PointageEleve getPointageByIdSecteur(Date date, String idSecteur, Integer moment,Connection c) throws Exception {
+    public PointageEleve getPointageByIdSecteur(Date date, String idBattiment, Integer moment,Connection c) throws Exception {
         PointageEleve pointageEleve = new PointageEleve();
         pointageEleve.setDatePointage(date);
-        pointageEleve.setIdSecteur(idSecteur);
+        pointageEleve.setIdBattiment(idBattiment);
         pointageEleve.setDivisionJournee(moment);
-        return (PointageEleve) pointageEleve.findWhere(c);
+        return (PointageEleve) pointageEleve.findWhere(c).get(0);
     }
-    public void setIdSecteur(String value){
-        this.idSecteur = value;
+
+    public void setIdBattiment(String value){
+        this.idBattiment = value;
     }
-    public String getIdSecteur(){
-        return this.idSecteur;
+    public String getIdBattiment(){
+        return this.idBattiment;
     }
 
     public void setDatePointage(java.sql.Date value){

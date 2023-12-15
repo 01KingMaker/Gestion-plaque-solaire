@@ -10,6 +10,8 @@ create sequence seq_secteur;
 create sequence seq_status;
 create sequence seq_lumiere;
 create sequence seq_pointage;
+create sequence seq_battiment;
+create sequence seq_coupure;
 
 CREATE TABLE Plaque_solaire(
    id_plaque_solaire VARCHAR(50) ,
@@ -84,3 +86,9 @@ create table association_secteur_source(
 );
 
 alter table association_secteur_source add column date_association date;
+
+----------------------------------------------- View ----------------------------------------------------
+
+create or replace view v_coupure
+as select l.date_reception ,l.heure_reception heure_debut, s.heure_coupure heure_fin from status s join Lumiere l
+    on s.id_reception = l.id_reception order by s.id_status;

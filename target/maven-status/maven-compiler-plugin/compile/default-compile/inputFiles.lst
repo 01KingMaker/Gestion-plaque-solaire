@@ -1,1 +1,14 @@
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/objet/PlaqueSolaire.java
 /home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/Main.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/objet/Batterie.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/infrastructure/Batiment.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/information/Reception.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/information/PointageEleve.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/MonComparator.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/information/Affichage.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/objet/Source.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/infrastructure/Secteur.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/information/AssociationSecteurSource.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/information/Status.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/information/Coupure.java
+/home/fabien/Documents/GitHub/gestion-solaire/src/main/java/com/plaquesolaire/entity/Utils.java

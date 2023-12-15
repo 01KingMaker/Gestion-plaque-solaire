@@ -2,6 +2,7 @@ package com.plaquesolaire.entity.information;
 
 import annotation.*;
 import com.plaquesolaire.entity.Utils;
+import com.plaquesolaire.entity.infrastructure.Batiment;
 import com.plaquesolaire.entity.infrastructure.Secteur;
 import com.plaquesolaire.entity.objet.Batterie;
 import com.plaquesolaire.entity.objet.PlaqueSolaire;
@@ -10,6 +11,7 @@ import dao.BddObject;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 // ok
@@ -36,23 +38,26 @@ public class AssociationSecteurSource extends BddObject
         return retour;
     }
 
-    public double getTotalCharge(List<AssociationSecteurSource> associationSecteurSources, Date date, Time heure, Connection c) throws Exception {
+    // maka ny charge totale anle batiment anaty secteur
+    public double getTotalCharge(String idSecteur, Date date, Time heure, Connection c) throws Exception {
         double power = 0;
-        for (AssociationSecteurSource ass: associationSecteurSources) {
-            Secteur secteur = new Secteur().getSecteurById(c, ass.getIdSecteur());
+        Secteur secteur = new Secteur().getSecteurById(c, idSecteur);
+        secteur.setBattimentsPersistence(c);
+        for (Batiment ass: secteur.getBattiments()) {
+
             int moment = 1;
-            Time midi = Time.valueOf("12:00");
+            Time midi = Time.valueOf(LocalTime.of(12, 0, 1));
             if(heure.after(midi)){
                 moment = 2;
             }
-            PointageEleve pointageEleve = new PointageEleve().getPointageByIdSecteur(date, ass.getIdSecteur(), moment, c);
-            power += pointageEleve.getPuissanceRequis() * pointageEleve.getNombre();
+            PointageEleve pointageEleve = new PointageEleve().getPointageByIdSecteur(date, ass.getIdBatiment(), moment, c);
+            /*power += pointageEleve.getPuissanceRequis()  pointageEleve.getNombre()*/;
+            power += pointageEleve.getNombre();
         }
         return power;
     }
     public List<AssociationSecteurSource> getCurrentSourceBySector(Connection c) throws Exception {
-        String sql = "select * from association_secteur_source where date_association=" +
-                "(select max(date_association) from association_secteur_source)";
+        String sql = "select * from association_secteur_source";
         System.out.println(sql);
         return this.executeQuery(c, sql, this);
     }

@@ -8,37 +8,32 @@ import java.sql.Date;
 import java.util.List;
 
 // ok
-@Table(name = "lumiere")
-public class Lumiere extends BddObject
+@Table(name = "reception")
+public class Reception extends BddObject
 {
 
-    @ForeignKey
-    @Column(name = "id_status")
-    public String idStatus;    
-
-    @Column(name = "heure_reception")
-    public java.sql.Time heureReception;    
-
-    @Column(name = "luminosite")
-    public Integer luminosite;    
-
-    @Column(name = "date_reception")
-    public java.sql.Date dateReception;    
 
     @PrimaryKey(prefix = "REC", sequence = "seq_lumiere", length = 10)
     @Column(name = "id_reception")
-    public String idReception;    
+    public String idReception;
+  
+    
+    @Column(name = "date_reception")
+    public java.sql.Date dateReception;    
+    
+    @Column(name = "luminosite")
+    public Integer luminosite;    
 
-    public List<Lumiere> getAllLuminosiy(Date date, Connection c) throws Exception {
-        Lumiere lumiere = new Lumiere();
+    @Column(name = "heure_reception")
+    public java.sql.Time heureReception;  
+
+
+    public List<Reception> getAllLuminosiy(Date date, Connection c) throws Exception {
+        Reception lumiere = new Reception();
         lumiere.setDateReception(date);
-        return lumiere.findWhere(c);
-    }
-    public void setIdStatus(String value){
-        this.idStatus = value;
-    }
-    public String getIdStatus(){
-        return this.idStatus;
+        String sql = "select * from reception where date_reception='"+date+"' order by heure_reception";
+       // System.out.println(sql);
+        return this.executeQuery(c, sql, new Reception());
     }
 
     public void setHeureReception(java.sql.Time value){
@@ -49,7 +44,7 @@ public class Lumiere extends BddObject
     }
 
     public void setLuminosite(Integer value) throws Exception {
-        if(value < 0 | value > 10) throw new Exception("Hors limite ="+value);
+        //if(value < 0 | value > 10) throw new Exception("Hors limite ="+value);
         this.luminosite = value;
     }
     public Integer getLuminosite(){

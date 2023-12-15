@@ -1,8 +1,10 @@
 package com.plaquesolaire.entity.objet;
 
 import annotation.*;
+import com.plaquesolaire.entity.Utils;
 import dao.BddObject;
 
+import java.sql.Connection;
 import java.util.List;
 
 // ok
@@ -27,6 +29,15 @@ public class Source extends BddObject
 
     public List<Batterie> batterieList;
     public List<PlaqueSolaire> plaqueSolaireList;
+
+    public double[] getTotalPower(Connection c) throws Exception {
+        double[] retour = new double[2];
+        List<Object> batterieList = new Batterie().getBatterieByIdSource(this.idSource, c);
+        List<Object> plaqueSolaireList = new PlaqueSolaire().getPlaqueByIdSource(this.idSource, c);
+        retour[0] = Utils.somme(batterieList, "getPuissanceMax");
+        retour[1] = Utils.somme(plaqueSolaireList, "getPuissanceMax");
+        return retour;
+    }
 
     public void setPlaqueSolaireList(List<PlaqueSolaire> plaqueSolaireList) {
         this.plaqueSolaireList = plaqueSolaireList;
