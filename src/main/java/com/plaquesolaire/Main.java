@@ -19,7 +19,7 @@ public class Main {
         
         try(Connection c = DbConnection.connect()){
             c.setAutoCommit(false);
-            Coupure coupure = new Coupure("2023-12-13T10:00", "SCT001");
+            Coupure coupure = new Coupure("2023-12-13T00:00", "SCT001");
             Affichage statusList = coupure.getPredictionStatus(c);
             System.out.println("Vita");
             System.out.println("Moyenne "+statusList.getCoupure().getTotalBesoin());
